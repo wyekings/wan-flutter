@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Wan.Starting" parent="Theme.SplashScreen">
+        <item name="android:windowBackground">@drawable/layer_list_splash</item>
+        <item name="android:windowSplashscreenContent">@null</item>
+        <item name="windowSplashScreenBackground">@android:color/transparent</item>
+        <item name="postSplashScreenTheme">@style/Theme.Wan</item>
+    </style>
+</resources>
