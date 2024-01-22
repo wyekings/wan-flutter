@@ -10,10 +10,6 @@ class MainActivity: FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen().apply { setKeepOnScreenCondition { true } }
         super.onCreate(savedInstanceState)
-        hideSplashScreen(splashScreen)
-    }
-
-    private fun hideSplashScreen(splashScreen: SplashScreen) {
         window.decorView.post { splashScreen.setKeepOnScreenCondition { false } }
     }
 }
