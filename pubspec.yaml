@@ -37,10 +37,14 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
+  # https://pub.dev/packages/dio
+  dio: ^5.4.0
+  
   # https://pub.dev/packages/flutter_launcher_icons
   flutter_launcher_icons: ^0.13.1
   # https://pub.dev/packages/flutter_native_splash
   flutter_native_splash: ^2.3.9
+
 flutter_launcher_icons:
   android: "ic_launcher"
   ios: true
