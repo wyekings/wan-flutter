@@ -26,9 +26,9 @@ BaseResponse<T> _$BaseResponseFromJson<T>(
       errorMessage: json['errorMessage'] as String,
     );
 
-Map<String, dynamic> _$BaseResponseToJson<T>(
+Map<String, dynamic> _$BaseResponseToJson(
   BaseResponse<dynamic> instance,
-  Map<String, dynamic> Function(dynamic value) toJsonT,
+  dynamic Function(dynamic value) toJsonT,
 ) =>
     <String, dynamic>{
       'data': _$nullableGenericToJson(instance.data, toJsonT),
@@ -50,20 +50,17 @@ dynamic _$nullableGenericFromJson<T>(
   }
 }
 
-Object? _$nullableGenericToJson<T>(
+dynamic _$nullableGenericToJson(
   dynamic input,
-  Object? Function(T value) toJson,
-){
-
-  if(input == null) {
+  dynamic Function(dynamic value) toJson,
+) {
+  if (input == null) {
     return null;
   }
 
-  if(input is List) {
-
+  if (input is List) {
+    return input.map(toJson).toList();
   } else {
     return toJson(input);
   }
-
-  input == null ? null : toJson(input);
 }
