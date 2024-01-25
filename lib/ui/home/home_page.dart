@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:wan/ui/home/slide_drawer.dart';
 
@@ -36,7 +35,10 @@ class _HomePageState extends State<HomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headlineMedium,
             ),
           ],
         ),
