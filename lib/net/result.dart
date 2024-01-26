@@ -1,3 +1,7 @@
+
+
+import 'package:wan/net/response_exception.dart';
+
 class Result<T> {
   final dynamic _value;
 
@@ -5,7 +9,7 @@ class Result<T> {
 
   factory Result.success(T value) => Result._(value);
 
-  factory Result.failure(Exception exception) => Result._(Failure(exception));
+  factory Result.failure(ResponseException exception) => Result._(Failure(exception));
 
   bool get isSuccess => _value! is Failure;
 
@@ -29,6 +33,19 @@ class Result<T> {
 }
 
 extension ResultExtension<T> on Result<T> {
+  void when({
+    void Function(T)? onSuccess,
+    void Function(ResponseException)? onFailure,
+  }) {
+    if(isSuccess){
+      if(onSuccess != null) {
+        onSuccess(_value);
+      }
+    } else if(onFailure != null){
+      onFailure((_value as Failure).exception);
+    }
+  }
+
   T getOrThrow() {
     if (isFailure) {
       throw (_value as Failure).exception;
@@ -45,7 +62,7 @@ extension ResultExtension<T> on Result<T> {
 }
 
 class Failure {
-  final Exception exception;
+  final ResponseException exception;
 
   Failure(this.exception);
 }

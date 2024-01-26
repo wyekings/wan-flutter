@@ -3,7 +3,7 @@ import 'dart:convert';
 class BaseResponse<T> {
   final T? data;
   final int errorCode;
-  final String errorMessage;
+  final String? errorMessage;
 
   BaseResponse(
       {required this.data,

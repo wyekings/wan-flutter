@@ -1,13 +1,16 @@
 import 'package:dio/dio.dart';
+import 'package:wan/net/decoder.dart';
 
 import 'client_options.dart';
 
 class HttpManager {
+  late ClientOptions _clientOptions;
+
   final Dio _dio = Dio();
 
   Dio get dio => _dio;
 
-  ClientOptions _clientOptions = ClientOptions.builder().build();
+  Decoder get decoder => _clientOptions.decoder;
 
   HttpManager._();
 
