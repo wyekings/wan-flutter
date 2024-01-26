@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:wan/net/request.dart';
+import 'package:wan/ui/home/data/entity/banner_entity.dart';
 import 'package:wan/ui/home/slide_drawer.dart';
 
-class HomePage extends StatefulWidget {
+import '../../net/result.dart';
 
+class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
 
   final String title;
@@ -14,8 +17,30 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _counter = 0;
 
+  @override
+  void initState() {
+    getBanners();
+    super.initState();
+  }
+
+  void getBanners() async {
+    final result = await get<List<BannerEntity>,BannerEntity>(
+        "/banner/json", (json) => BannerEntity.fromJson(json));
+    result.when(
+      onSuccess: (banners) {
+        if (banners != null && banners.isNotEmpty) {
+          debugPrint(banners[0].desc);
+        }
+      },
+      onFailure: (e) {
+        debugPrint(e.message);
+      },
+    );
+  }
+
   void _incrementCounter() {
     setState(() {
+      getBanners();
       _counter++;
     });
   }
@@ -35,10 +60,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .headlineMedium,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
         ),

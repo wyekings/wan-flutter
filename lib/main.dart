@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wan/net/client_options.dart';
+import 'package:wan/net/decoder.dart';
 import 'package:wan/ui/home/home_page.dart';
 
 void main() {
@@ -6,6 +8,11 @@ void main() {
   //   SystemChrome.setSystemUIOverlayStyle(
   //       const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light));
   // }
+  ClientOptions.builder()
+      .baseUrl('https://www.wanandroid.com')
+      .decoder(BaseResponseDecoder.getInstance())
+      .build()
+      .apply();
   runApp(const WanApp());
 }
 

@@ -1,46 +1,46 @@
-import 'dart:convert';
 
-class BaseResponse<T> {
+
+class BaseResponse<T,M> {
   final T? data;
   final int errorCode;
-  final String? errorMessage;
+  final String? errorMsg;
 
   BaseResponse(
       {required this.data,
       required this.errorCode,
-      required this.errorMessage});
+      required this.errorMsg});
 
   factory BaseResponse.fromJson(
-          Map<String, dynamic> json, dynamic Function(dynamic json) fromJsonT) =>
-      _$BaseResponseFromJson<T>(json, fromJsonT);
+          Map<String, dynamic> json, M Function(dynamic json) fromJsonT) =>
+      _$BaseResponseFromJson<T,M>(json, fromJsonT);
 
   Map<String, dynamic> toJson(dynamic Function(dynamic value) toJsonT) =>
-      _$BaseResponseToJson<T>(this, toJsonT);
+      _$BaseResponseToJson<T,M>(this, toJsonT);
 }
 
-BaseResponse<T> _$BaseResponseFromJson<T>(
+BaseResponse<T,M> _$BaseResponseFromJson<T,M>(
   Map<String, dynamic> json,
-  dynamic Function(dynamic json) fromJsonT,
+  M Function(dynamic json) fromJsonT,
 ) =>
-    BaseResponse<T>(
-      data: _fromJson(json['data'], fromJsonT),
+    BaseResponse<T,M>(
+      data: _fromJson<T,M>(json['data'], fromJsonT),
       errorCode: json['errorCode'] as int,
-      errorMessage: json['errorMessage'] as String,
+      errorMsg: json['errorMsg'] as String,
     );
 
-Map<String, dynamic> _$BaseResponseToJson<T>(
-  BaseResponse<T> response,
+Map<String, dynamic> _$BaseResponseToJson<T,M>(
+  BaseResponse<T,M> response,
   dynamic Function(dynamic value) toJsonT,
 ) =>
     <String, dynamic>{
       'data': _toJson(response.data, toJsonT),
       'errorCode': response.errorCode,
-      'errorMessage': response.errorMessage,
+      'errorMsg': response.errorMsg,
     };
 
-dynamic _fromJson(
+dynamic _fromJson<T,M>(
   dynamic json,
-  dynamic Function(dynamic json) fromJson,
+  M Function(dynamic json) fromJson,
 ) {
   if (json == null) {
     return null;

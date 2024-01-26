@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:wan/net/decoder.dart';
 
 import 'client_options.dart';
@@ -24,9 +25,20 @@ class HttpManager {
   }
 
   void apply() {
+    _dio.interceptors.add(
+      PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
+          responseBody: true,
+          responseHeader: true,
+          error: true,
+          compact: true,
+          maxWidth: 90),
+    );
+
     _dio.options = BaseOptions(
       baseUrl: _clientOptions.baseUrl,
-      contentType: 'application/json',
+      responseType: ResponseType.plain,
     );
   }
 

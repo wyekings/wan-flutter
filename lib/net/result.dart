@@ -1,5 +1,4 @@
-
-
+import 'package:flutter/material.dart';
 import 'package:wan/net/response_exception.dart';
 
 class Result<T> {
@@ -9,9 +8,10 @@ class Result<T> {
 
   factory Result.success(T value) => Result._(value);
 
-  factory Result.failure(ResponseException exception) => Result._(Failure(exception));
+  factory Result.failure(ResponseException exception) =>
+      Result._(Failure(exception));
 
-  bool get isSuccess => _value! is Failure;
+  bool get isSuccess => _value is! Failure;
 
   bool get isFailure => _value is Failure;
 
@@ -37,11 +37,11 @@ extension ResultExtension<T> on Result<T> {
     void Function(T)? onSuccess,
     void Function(ResponseException)? onFailure,
   }) {
-    if(isSuccess){
-      if(onSuccess != null) {
+    if (isSuccess) {
+      if (onSuccess != null) {
         onSuccess(_value);
       }
-    } else if(onFailure != null){
+    } else if (onFailure != null) {
       onFailure((_value as Failure).exception);
     }
   }

@@ -4,11 +4,10 @@ import 'package:wan/net/decoder.dart';
 import 'package:wan/net/exception_handler.dart';
 import 'package:wan/net/http_manager.dart';
 import 'package:wan/net/result.dart';
-import 'package:wan/ui/home/data/entity/banner_entity.dart';
 
-Future<Result<T?>> get<T>(
+Future<Result<T?>> get<T, M>(
   String url,
-  FromJson fromJson, {
+  M Function(dynamic) fromJson, {
   Object? data,
   Map<String, dynamic>? queryParameters,
   CancelToken? cancelToken,
@@ -18,7 +17,7 @@ Future<Result<T?>> get<T>(
   Decoder? decoder,
   ExceptionHandler? exceptionHandler,
 }) async =>
-    _request(url, 'GET', fromJson,
+    await _request<T, M>(url, 'GET', fromJson,
         data: data,
         queryParameters: queryParameters,
         cancelToken: cancelToken,
@@ -26,9 +25,9 @@ Future<Result<T?>> get<T>(
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress);
 
-Future<Result<T?>> post<T>(
+Future<Result<T?>> post<T, M>(
   String url,
-  FromJson fromJson, {
+  M Function(dynamic) fromJson, {
   Object? data,
   Map<String, dynamic>? queryParameters,
   CancelToken? cancelToken,
@@ -38,7 +37,7 @@ Future<Result<T?>> post<T>(
   Decoder? decoder,
   ExceptionHandler? exceptionHandler,
 }) async =>
-    _request(url, 'POST', fromJson,
+    await _request(url, 'POST', fromJson,
         data: data,
         queryParameters: queryParameters,
         cancelToken: cancelToken,
@@ -46,10 +45,10 @@ Future<Result<T?>> post<T>(
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress);
 
-Future<Result<T?>> _request<T>(
+Future<Result<T?>> _request<T, M>(
   String url,
   String method,
-  FromJson fromJson, {
+  M Function(dynamic) fromJson, {
   Object? data,
   Map<String, dynamic>? queryParameters,
   CancelToken? cancelToken,
@@ -70,47 +69,40 @@ Future<Result<T?>> _request<T>(
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress);
 
-    Message message = createMessage(response, fromJson, decoder);
-
-    T? result = await compute<Message, T?>(
+    Message<M> message = createMessage<M>(response, fromJson, decoder);
+    T? result = await compute<Message<M>, T?>(
         (message) =>
-            message.decoder.decode<T?>(message.response, message.fromJson),
+            message.decoder.decode<T?, M>(message.response, message.fromJson),
         message);
+
     return Result.success(result);
   } on Exception catch (e) {
     return Result.failure(exceptionHandler.handle(e));
   } on Error catch (e) {
+    debugPrint('error=$e');
     return Result.failure(exceptionHandler.handle(e));
   }
 }
 
 Options _checkOptions(String method, Options? options) {
   options ??= Options();
+  options.responseType = ResponseType.plain;
   options.method = method;
   return options;
 }
 
-Message createMessage(
-        Response<dynamic> response, FromJson fromJson, Decoder? decoder) =>
+Message<M> createMessage<M>(Response<dynamic> response,
+        M Function(dynamic) fromJson, Decoder? decoder) =>
     Message(
       response,
       fromJson,
       decoder ?? HttpManager.getInstance().decoder,
     );
 
-class Message {
+class Message<M> {
   final Response<dynamic> response;
-  final FromJson fromJson;
+  final M Function(dynamic) fromJson;
   final Decoder decoder;
 
   Message(this.response, this.fromJson, this.decoder);
-}
-
-void test() async {
-  var result =
-      await get<BannerEntity>("", (json) => BannerEntity.fromJson(json));
-  result.when(
-    onSuccess: (it) {},
-    onFailure: (e) {},
-  );
 }
