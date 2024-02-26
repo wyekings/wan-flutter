@@ -24,12 +24,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getBanners() async {
-    final result = await get<List<BannerEntity>,BannerEntity>(
-        "/banner/json", (json) => BannerEntity.fromJson(json));
+    final result = await get<List<BannerEntity>>("/banner/json");
     result.when(
       onSuccess: (banners) {
         if (banners != null && banners.isNotEmpty) {
-          debugPrint(banners[0].desc);
+          debugPrint('ccc=${banners[0].desc}');
         }
       },
       onFailure: (e) {

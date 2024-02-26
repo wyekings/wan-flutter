@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:wan/net/decoder.dart';
+import 'package:wan/net/exception_handler.dart';
+import 'package:wan/net/response_decoder.dart';
 
 import 'client_options.dart';
 
@@ -12,6 +13,8 @@ class HttpManager {
   Dio get dio => _dio;
 
   Decoder get decoder => _clientOptions.decoder;
+
+  ExceptionHandler get exceptionHandler => _clientOptions.exceptionHandler;
 
   HttpManager._();
 

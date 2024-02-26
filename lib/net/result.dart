@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:wan/net/response_exception.dart';
 
 class Result<T> {

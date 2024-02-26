@@ -6,10 +6,8 @@ import 'package:wan/net/response_exception.dart';
 
 import 'base_response.dart';
 
-typedef FromJson = dynamic Function(Map<String, dynamic>);
-
 abstract class Decoder {
-  T? decode<T, M>(Response<dynamic> response, M Function(dynamic) fromJson);
+  T decode<T>(Response<dynamic> response);
 }
 
 class BaseResponseDecoder extends Decoder {
@@ -20,15 +18,12 @@ class BaseResponseDecoder extends Decoder {
   factory BaseResponseDecoder.getInstance() => _instance;
 
   @override
-  T? decode<T, M>(Response<dynamic> response, M Function(dynamic) fromJson) {
+  T decode<T>(Response<dynamic> response) {
     final data = response.data.toString();
-
-    final baseResponse = BaseResponse<T?, M>.fromJson(json.decode(data),fromJson);
-
-    debugPrint('ddddd=${baseResponse}');
-
+    final baseResponse = BaseResponse<T>.fromJson(json.decode(data));
+    debugPrint('${baseResponse.data}');
     if (baseResponse.errorCode == 0) {
-      return baseResponse.data;
+      return baseResponse.data as T;
     }
     throw ServiceException(baseResponse.errorCode, baseResponse.errorMsg ?? '');
   }

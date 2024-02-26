@@ -1,32 +1,27 @@
-import 'package:json_annotation/json_annotation.dart';
-
-part 'banner_entity.g.dart';
-
+import 'package:wan/generated/json/base/json_field.dart';
+import 'package:wan/generated/json/banner_entity.g.dart';
+import 'dart:convert';
+export 'package:wan/generated/json/banner_entity.g.dart';
 
 @JsonSerializable()
 class BannerEntity {
+	String? desc = '';
+	int? id = 0;
+	String? imagePath = '';
+	int? isVisible = 0;
+	int? order = 0;
+	String? title = '';
+	int? type = 0;
+	String? url = '';
 
-  String desc;
+	BannerEntity();
 
-  int id;
+	factory BannerEntity.fromJson(Map<String, dynamic> json) => $BannerEntityFromJson(json);
 
-  String imagePath;
+	Map<String, dynamic> toJson() => $BannerEntityToJson(this);
 
-  int isVisible;
-
-  int order;
-
-  String title;
-
-  int type;
-
-  String url;
-
-  BannerEntity(this.desc,this.id,this.imagePath,this.isVisible,this.order,this.title,this.type,this.url,);
-
-  factory BannerEntity.fromJson(Map<String, dynamic> srcJson) => _$BannerEntityFromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$BannerEntityToJson(this);
+	@override
+	String toString() {
+		return jsonEncode(this);
+	}
 }
-
-

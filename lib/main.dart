@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wan/net/client_options.dart';
-import 'package:wan/net/decoder.dart';
+import 'package:wan/net/response_decoder.dart';
 import 'package:wan/ui/home/home_page.dart';
 
 void main() {
