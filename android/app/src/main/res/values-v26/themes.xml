@@ -6,5 +6,7 @@
         <item name="android:windowSplashscreenContent">@null</item>
         <item name="windowSplashScreenBackground">@android:color/transparent</item>
         <item name="postSplashScreenTheme">@style/Theme.Wan</item>
+        <item name="android:windowLightStatusBar">true</item>
+<!--        <item name="android:windowFullscreen">true</item>-->
     </style>
 </resources>

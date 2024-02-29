@@ -6,6 +6,7 @@
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowFullscreen">false</item>
     </style>
 
     <style name="Theme.Wan.Starting" parent="Theme.SplashScreen">
