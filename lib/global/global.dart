@@ -1,5 +1,6 @@
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:wan/global/provider/model/auth.dart';
 import 'package:wan/net/client_options.dart';
 import 'package:wan/net/response_decoder.dart';
@@ -28,10 +29,13 @@ class Global {
     _authed = token.isNotEmpty;
     authState = AuthProvider(authed: false);
 
+    final cookiePath = await getTemporaryDirectory();
+
     ClientOptions.builder()
         .baseUrl('https://www.wanandroid.com')
         .decoder(BaseResponseDecoder.getInstance())
-        // .addInterceptor(CookieManager(PersistCookieJar()))
+        .addInterceptor(CookieManager(
+            PersistCookieJar(storage: FileStorage(cookiePath.path))))
         .build()
         .apply();
   }
