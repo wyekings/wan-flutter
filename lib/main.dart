@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:wan/net/client_options.dart';
-import 'package:wan/net/response_decoder.dart';
-import 'package:wan/ui/home/home_page.dart';
+import 'package:provider/provider.dart';
+import 'package:wan/global/global.dart';
+import 'package:wan/global/provider/model/auth.dart';
+import 'package:wan/ui/home/home.dart';
 
-void main() {
+void main() async {
   // if (Platform.isAndroid) {
   //   SystemChrome.setSystemUIOverlayStyle(
   //       const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light));
   // }
-  ClientOptions.builder()
-      .baseUrl('https://www.wanandroid.com')
-      .decoder(BaseResponseDecoder.getInstance())
-      .build()
-      .apply();
-  runApp(const WanApp());
+
+  final global = Global.get();
+  await global.init();
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => AuthProvider(authed: global.authed),
+        ),
+      ],
+      child: const WanApp(),
+    ),
+  );
 }
 
 class WanApp extends StatelessWidget {

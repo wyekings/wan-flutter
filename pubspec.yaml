@@ -32,21 +32,36 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
   # https://pub.dev/packages/dio
-  dio: ^5.4.0
+  dio: ^5.4.1
   # https://pub.dev/packages/pretty_dio_logger
   pretty_dio_logger: ^1.3.1
+  # https://pub.dev/packages/cookie_jar
+  cookie_jar: ^4.0.8
+  # https://pub.dev/packages/dio_cookie_manager
+  dio_cookie_manager: ^3.1.1
   
   # https://pub.dev/packages/flutter_launcher_icons
   flutter_launcher_icons: ^0.13.1
   # https://pub.dev/packages/flutter_native_splash
   flutter_native_splash: ^2.3.9
+
   json_annotation: ^4.8.1
+
+  # https://pub.dev/packages/get_storage
+  get_storage: ^2.1.1
+
+  # https://pub.dev/packages/provider
+  provider: ^6.1.2
+
+  # https://pub.dev/packages/logger
+  logger: ^2.1.0
+  # https://pub.dev/packages/fluttery_timber
+  fluttery_timber: ^0.0.4
 
 flutter_launcher_icons:
   android: "ic_launcher"

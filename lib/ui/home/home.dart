@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wan/global/provider/model/auth.dart';
 import 'package:wan/net/request.dart';
 import 'package:wan/ui/home/data/entity/banner_entity.dart';
-import 'package:wan/ui/home/slide_drawer.dart';
+import 'package:wan/ui/home/home_drawer.dart';
 
 import '../../net/result.dart';
 
@@ -38,6 +40,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _incrementCounter() {
+    context.read<AuthProvider>().login();
     setState(() {
       getBanners();
       _counter++;
