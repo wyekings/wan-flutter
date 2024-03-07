@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wan/global/global.dart';
 import 'package:wan/global/provider/model/auth.dart';
+import 'package:wan/ui/auth/login.dart';
 import 'package:wan/ui/home/home.dart';
+import 'package:wan/ui/routes.dart';
 
 void main() async {
   // if (Platform.isAndroid) {
@@ -58,7 +60,11 @@ class WanApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const HomePage(title: 'Wan'),
+      initialRoute: Routes.root,
+      routes: {
+        Routes.root: (_) => const HomePage(title: 'Wan'),
+        Routes.login: (_) => const LoginPage(),
+      },
     );
   }
 }

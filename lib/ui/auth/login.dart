@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:wan/widget/appbar.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,6 +11,15 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: WanAppBar(
+        title: '登录',
+      ),
+      body: const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+        ),
+      ),
+    );
   }
 }
