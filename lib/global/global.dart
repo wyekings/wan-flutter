@@ -22,7 +22,7 @@ class Global {
 
   bool get isDebug => kDebugMode;
 
-  bool get authed => _authed;
+  bool get authed => false;
 
   Future<void> init() async {
     initLogger();

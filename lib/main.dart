@@ -61,6 +61,9 @@ class WanApp extends StatelessWidget {
           //   statusBarBrightness: Brightness.light,
           // ),
         ),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Colors.black87,
+        ),
         useMaterial3: true,
       ),
       initialRoute: Routes.root,
