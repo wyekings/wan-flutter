@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:wan/generated/json/base/json_convert_content.dart';
-import 'package:wan/ui/home/data/entity/banner_entity.dart';
 
 class BaseResponse<T> {
   final T? data;
@@ -64,11 +63,11 @@ dynamic _fromJson<T>(
     List d = json.map((e) => fromJson(e)).toList();
     var c=  json.map((i) {
       var a = (fromJson(i) as List)[0];
-      debugPrint('a=${a}');
+      debugPrint('a=$a');
       a;
       i;
     });
-    debugPrint('result=${d}');
+    debugPrint('result=$d');
     return d;
   } else {
     return fromJson(json);

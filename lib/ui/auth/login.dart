@@ -11,13 +11,19 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: WanAppBar(
-        title: '登录',
-      ),
-      body: const Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        if (didPop) return;
+        Navigator.pop(context);
+      },
+      child: Scaffold(
+        appBar: WanAppBar(
+          title: '登录',
+        ),
+        body: const Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(),
         ),
       ),
     );

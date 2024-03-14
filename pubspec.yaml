@@ -65,6 +65,7 @@ dependencies:
   # https://pub.dev/packages/fluttery_timber
   fluttery_timber: ^0.0.4
 
+  meta: any
 flutter_launcher_icons:
   android: "ic_launcher"
   ios: true

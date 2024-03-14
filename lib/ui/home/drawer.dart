@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wan/global/provider/model/auth.dart';
@@ -49,7 +48,10 @@ class _SlideDrawerState extends State<SlideDrawer> {
                           fontSize: 18,
                           fontWeight: FontWeight.bold),
                     ),
-                    onTap: ()=> Navigator.pushNamed(context, Routes.login),
+                    onTap: () {
+                      // Navigator.pop(context);
+                      Navigator.pushNamed(context, Routes.login);
+                    },
                   ),
                 )
               ],
