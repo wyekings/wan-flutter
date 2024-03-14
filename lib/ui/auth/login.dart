@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _userNameWidget(iconBoxConstraints, border),
               const SizedBox(
@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               _passwordWidget(iconBoxConstraints, border),
               const SizedBox(
-                height: 10.0,
+                height: 30.0,
               ),
               _loginWidget(),
             ],
@@ -103,24 +103,32 @@ class _LoginPageState extends State<LoginPage> {
             size: 24.0,
           ),
           prefixIconConstraints: iconBoxConstraints,
-          suffixIcon: Visibility(
-            visible: _userNameClear,
-            child: IconButton(
-              style: IconButton.styleFrom(
-                padding: EdgeInsets.zero,
+          suffixIconConstraints: const BoxConstraints(
+              minWidth: 0.0, minHeight: 0.0, maxHeight: 34.0, maxWidth: 100.0),
+          suffixIcon: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Visibility(
+                visible: _userNameClear,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: SizedBox(
+                      width: 34.0,
+                      height: 34.0,
+                      child: IconButton(
+                        iconSize: 18.0,
+                        style: IconButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                        ),
+                        onPressed: () => _userNameController.clear(),
+                        icon: const Icon(
+                          Icons.clear,
+                          color: Colors.black26,
+                        ),
+                      )),
+                ),
               ),
-              onPressed: () {
-                _passwordController.clear();
-
-                /// TextEditingController.clear() not call onChanged
-                setState(() => _passwordClear = false);
-              },
-              icon: const Icon(
-                Icons.clear,
-                size: 18.0,
-                color: Colors.black26,
-              ),
-            ),
+            ],
           ),
           contentPadding: const EdgeInsets.all(0.0),
           hintText: '用户名',
@@ -149,49 +157,53 @@ class _LoginPageState extends State<LoginPage> {
             size: 24.0,
           ),
           prefixIconConstraints: iconBoxConstraints,
-          suffixIconConstraints: iconBoxConstraints,
-          suffixIcon: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                width: 34,
-                height: 34,
-                child: IconButton(
-                  style: IconButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    // backgroundColor: Colors.transparent,
-                  ),
-                  iconSize: 18,
-                  onPressed: _toggleObscure,
-                  icon: Icon(
-                    _obscureText ? Icons.visibility : Icons.visibility_off,
-                    color: Colors.black26,
+          suffixIconConstraints: const BoxConstraints(
+              minWidth: 0.0, minHeight: 0.0, maxHeight: 34.0, maxWidth: 100.0),
+          suffixIcon: Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  width: 34,
+                  height: 34,
+                  child: IconButton(
+                    style: IconButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      // backgroundColor: Colors.transparent,
+                    ),
+                    iconSize: 18,
+                    onPressed: _toggleObscure,
+                    icon: Icon(
+                      _obscureText ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.black26,
+                    ),
                   ),
                 ),
-              ),
-              Visibility(
-                visible: _passwordClear,
-                child: SizedBox(
-                    width: 34.0,
-                    height: 34.0,
-                    child: IconButton(
-                      style: IconButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                      ),
-                      onPressed: () {
-                        _passwordController.clear();
+                Visibility(
+                  visible: _passwordClear,
+                  child: SizedBox(
+                      width: 34.0,
+                      height: 34.0,
+                      child: IconButton(
+                        style: IconButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                        ),
+                        onPressed: () {
+                          _passwordController.clear();
 
-                        /// TextEditingController.clear() not call onChanged
-                        setState(() => _passwordClear = false);
-                      },
-                      icon: const Icon(
-                        Icons.clear,
-                        size: 18.0,
-                        color: Colors.black26,
-                      ),
-                    )),
-              ),
-            ],
+                          /// TextEditingController.clear() not call onChanged
+                          setState(() => _passwordClear = false);
+                        },
+                        icon: const Icon(
+                          Icons.clear,
+                          size: 18.0,
+                          color: Colors.black26,
+                        ),
+                      )),
+                ),
+              ],
+            ),
           ),
           contentPadding: const EdgeInsets.all(0.0),
           hintText: '密码',
@@ -204,18 +216,22 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _loginWidget() {
-    return IgnorePointer(
-      ignoring: !_allTextFilled,
-      child: ElevatedButton(
-        onPressed: _doLogin,
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: _allTextFilled ? Colors.black87 : Colors.black45,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24.0),
+    return SizedBox(
+      width: 250.0,
+      height: 40.0,
+      child: IgnorePointer(
+        ignoring: !_allTextFilled,
+        child: ElevatedButton(
+          onPressed: _doLogin,
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: _allTextFilled ? Colors.black87 : Colors.black12,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24.0),
+            ),
           ),
+          child: const Text('登录'),
         ),
-        child: const Text('登录'),
       ),
     );
   }
