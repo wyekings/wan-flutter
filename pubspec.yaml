@@ -64,6 +64,8 @@ dependencies:
   logger: ^2.1.0
   # https://pub.dev/packages/fluttery_timber
   fluttery_timber: ^0.0.4
+  # https://pub.dev/packages/fluttertoast
+  fluttertoast: ^8.2.4
 
   meta: any
 flutter_launcher_icons:

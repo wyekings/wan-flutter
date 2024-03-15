@@ -4,6 +4,7 @@ import 'package:wan/global/provider/model/auth.dart';
 import 'package:wan/net/request.dart';
 import 'package:wan/ui/home/data/entity/banner_entity.dart';
 import 'package:wan/ui/home/drawer.dart';
+import 'package:wan/utils/ToastUtil.dart';
 
 import '../../net/result.dart';
 
@@ -40,6 +41,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _incrementCounter() {
+    ToastUtil.show('msg');
     context.read<AuthProvider>().login();
     setState(() {
       getBanners();
