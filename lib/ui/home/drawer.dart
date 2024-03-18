@@ -45,51 +45,54 @@ class _SlideDrawerState extends State<SlideDrawer> {
     return Drawer(
       backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(),
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: authed ? _authedDrawerContent() : _unauthedDrawerContent(),
-      ),
+      child: authed ? _authedDrawerContent() : _unauthedDrawerContent(),
     );
   }
 
-  List<Widget> _unauthedDrawerContent() {
-    return [
-      SizedBox(
-        height: 182,
-        child: DrawerHeader(
-            decoration: const BoxDecoration(color: Colors.black87),
-            child: Column(
-              children: [
-                const CircleAvatar(
-                  backgroundColor: Colors.white,
-                  foregroundImage:
-                      AssetImage('assets/images/ic_flutter_dark.png'),
-                  radius: 36,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: GestureDetector(
-                    child: const Text(
-                      '登录',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    onTap: () {
-                      // Navigator.pop(context);
-                      Navigator.pushNamed(context, Routes.login);
-                    },
+  Widget _unauthedDrawerContent() {
+    return ListView(
+      padding: EdgeInsets.zero,
+      children: [
+        SizedBox(
+          height: 182,
+          child: DrawerHeader(
+              decoration: const BoxDecoration(color: Colors.black87),
+              child: Column(
+                children: [
+                  const CircleAvatar(
+                    backgroundColor: Colors.white,
+                    foregroundImage:
+                        AssetImage('assets/images/ic_flutter_dark.png'),
+                    radius: 36,
                   ),
-                )
-              ],
-            )),
-      ),
-    ];
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: GestureDetector(
+                      child: const Text(
+                        '登录',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      onTap: () {
+                        // Navigator.pop(context);
+                        Navigator.pushNamed(context, Routes.login);
+                      },
+                    ),
+                  )
+                ],
+              )),
+        ),
+      ],
+    );
   }
 
-  List<Widget> _authedDrawerContent() => [
-         SizedBox(
+  Widget _authedDrawerContent() {
+    return ListView(
+      padding: EdgeInsets.zero,
+      children: [
+        SizedBox(
           height: 182,
           child: DrawerHeader(
               decoration: const BoxDecoration(color: Colors.black87),
@@ -130,5 +133,7 @@ class _SlideDrawerState extends State<SlideDrawer> {
             Global.get().clear();
           },
         ),
-      ];
+      ],
+    );
+  }
 }
