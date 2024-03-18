@@ -26,7 +26,7 @@ Future<Result<T>> get<T>(
         decoder,
         exceptionHandler);
 
-Future<Result<T?>> post<T>(
+Future<Result<T>> post<T>(
   String path, {
   Object? data,
   Map<String, dynamic>? queryParameters,

@@ -30,6 +30,9 @@ class Global {
     final pref = Pref.get();
     await pref.init();
     _authed = pref.authed();
+
+    Timber.d('userName=${pref.getUserName()}');
+
     authState = AuthProvider(authed: _authed);
 
     final cookiePath = await getTemporaryDirectory();

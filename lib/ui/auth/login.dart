@@ -70,6 +70,8 @@ class _LoginPageState extends State<LoginPage> {
           ..saveAdmin(value?.admin ?? false)
           ..saveUserName(value?.username ?? '');
 
+        Timber.d('username===${Pref.get().getUserName()}');
+
         context.read<AuthProvider>().login();
 
         LoadingDialog.hide(context);

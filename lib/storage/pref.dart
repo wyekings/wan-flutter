@@ -26,10 +26,6 @@ class Pref {
     _storage.write(PrefKeys.admin.name, admin);
   }
 
-  void saveToken(String token) async {
-    _storage.write(PrefKeys.token.name, token);
-  }
-
   void clear(){
     _storage.clear();
   }
