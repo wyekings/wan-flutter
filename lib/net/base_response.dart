@@ -24,7 +24,7 @@ BaseResponse<T> _$BaseResponseFromJson<T>(
     Map<String, dynamic> json,
     ) {
   return BaseResponse(
-    data: JsonConvert.fromJsonAsT<T?>(json['data']),
+    data: JsonConvert.fromJsonAsT<T>(json['data']),
     errorCode: json['errorCode'] ??=-1,
     errorMsg: json['errorMsg'] ??='',
   );
@@ -59,15 +59,7 @@ dynamic _fromJson<T>(
     return null;
   }
   if (json is List) {
-    debugPrint('json=${json.runtimeType}');
     List d = json.map((e) => fromJson(e)).toList();
-    var c=  json.map((i) {
-      var a = (fromJson(i) as List)[0];
-      debugPrint('a=$a');
-      a;
-      i;
-    });
-    debugPrint('result=$d');
     return d;
   } else {
     return fromJson(json);

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:wan/global/provider/model/auth.dart';
+import 'package:fluttery_timber/fluttery_timber.dart';
 import 'package:wan/net/request.dart';
+import 'package:wan/ui/auth/data/entity/login_entity.dart';
 import 'package:wan/ui/home/data/entity/banner_entity.dart';
 import 'package:wan/ui/home/drawer.dart';
-import 'package:wan/utils/ToastUtil.dart';
 
 import '../../net/result.dart';
 
@@ -40,10 +39,25 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void _doLogin() async {
+    final params = {'username': 'wptdxii', 'password': '72762922'};
+    final result =
+    await post<LoginEntity>('/user/login', queryParameters: params);
+    result.when(
+      onSuccess: (value) {
+        Timber.d('onSuccess=$value');
+      },
+      onFailure: (e) {
+        Timber.e(e.message);
+      },
+    );
+  }
+
+
   void _incrementCounter() {
-    context.read<AuthProvider>().login();
+    getBanners();
+    // _doLogin();
     setState(() {
-      getBanners();
       _counter++;
     });
   }

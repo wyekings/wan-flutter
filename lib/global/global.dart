@@ -22,19 +22,17 @@ class Global {
 
   bool get isDebug => kDebugMode;
 
-  bool get authed => false;
+  bool get authed => _authed;
 
   Future<void> init() async {
     initLogger();
+
     final pref = Pref.get();
     await pref.init();
-    final token = pref.getToken();
-    // _authed = token.isNotEmpty;
-    _authed = false;
-    authState = AuthProvider(authed: false);
+    _authed = pref.authed();
+    authState = AuthProvider(authed: _authed);
 
     final cookiePath = await getTemporaryDirectory();
-
     ClientOptions.builder()
         .baseUrl('https://www.wanandroid.com')
         .decoder(BaseResponseDecoder.getInstance())
@@ -44,8 +42,16 @@ class Global {
         .apply();
   }
 
+  Future<void> clear() async {
+    Pref.get().clear();
+
+    final cookiePath = await getTemporaryDirectory();
+    final cookieJar = PersistCookieJar(storage: FileStorage(cookiePath.path));
+    cookieJar.deleteAll();
+  }
+
   void initLogger() {
-    final tree = isDebug? DebugLoggerTree(): ReleaseTree();
+    final tree = isDebug ? DebugLoggerTree() : ReleaseTree();
     Timber.plantTree(tree);
   }
 }

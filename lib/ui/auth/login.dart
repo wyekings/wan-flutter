@@ -1,5 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:fluttery_timber/fluttery_timber.dart';
+import 'package:provider/provider.dart';
+import 'package:wan/global/global.dart';
+import 'package:wan/global/provider/model/auth.dart';
+import 'package:wan/net/request.dart';
+import 'package:wan/net/result.dart';
+import 'package:wan/storage/pref.dart';
+import 'package:wan/ui/auth/data/entity/login_entity.dart';
+import 'package:wan/ui/routes.dart';
 import 'package:wan/utils/LoadingDialog.dart';
+import 'package:wan/utils/ToastUtil.dart';
 import 'package:wan/widget/appbar.dart';
 
 class LoginPage extends StatefulWidget {
@@ -23,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
 
   final _userNameFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
+
   // FocusScopeNode? _focusScopeNode;
 
   @override
@@ -44,11 +55,33 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void _doLogin() {
+  void _doLogin() async {
     var userName = _userNameController.text.trim();
     var password = _passwordController.text.trim();
 
     LoadingDialog.show(context, canPop: true);
+    final params = {'username': userName, 'password': password};
+    final result =
+        await post<LoginEntity>('/user/login', queryParameters: params);
+    result.when(
+      onSuccess: (value) {
+
+        Pref.get()
+          ..saveAdmin(value?.admin ?? false)
+          ..saveUserName(value?.username ?? '');
+
+        context.read<AuthProvider>().login();
+
+        LoadingDialog.hide(context);
+
+        // Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).popUntil((route) => Routes.root == route.settings.name);
+      },
+      onFailure: (e) {
+        ToastUtil.show(e.message);
+        LoadingDialog.hide(context);
+      },
+    );
   }
 
   @override

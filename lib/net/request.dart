@@ -5,7 +5,7 @@ import 'package:wan/net/http_manager.dart';
 import 'package:wan/net/response_decoder.dart';
 import 'package:wan/net/result.dart';
 
-Future<Result<T?>> get<T>(
+Future<Result<T>> get<T>(
   String path, {
   Object? data,
   Map<String, dynamic>? queryParameters,
@@ -47,7 +47,7 @@ Future<Result<T?>> post<T>(
         decoder,
         exceptionHandler);
 
-Future<Result<T?>> _result<T>(
+Future<Result<T>> _result<T>(
   Future<Response<dynamic>> Function(Dio) request,
   Decoder? decoder,
   ExceptionHandler? exceptionHandler,
@@ -58,7 +58,7 @@ Future<Result<T?>> _result<T>(
     Dio dio = HttpManager.getInstance().dio;
     Response<dynamic> response = await request(dio);
     _Message message = _Message.create(response, decoder);
-    T? result = await compute<_Message, T?>(
+    T result = await compute<_Message, T>(
         (callback) => callback.decoder.decode<T>(callback.response), message);
     return Result.success(result);
   } on Exception catch (e) {

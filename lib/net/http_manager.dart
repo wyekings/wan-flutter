@@ -53,7 +53,7 @@ class HttpManager {
       connectTimeout: _clientOptions.connectTimeout,
       receiveTimeout: _clientOptions.receiveTimeOut,
       sendTimeout: _clientOptions.sendTimeOut,
-      // headers:  _clientOptions.headers,
+      headers:  _clientOptions.headers,
     );
   }
 
