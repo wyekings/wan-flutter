@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wan/utils/LoadingDialog.dart';
 import 'package:wan/widget/appbar.dart';
 
 class LoginPage extends StatefulWidget {
@@ -19,6 +20,10 @@ class _LoginPageState extends State<LoginPage> {
   bool _obscureText = true;
 
   bool get _allTextFilled => _userNameClear && _passwordClear;
+
+  final _userNameFocusNode = FocusNode();
+  final _passwordFocusNode = FocusNode();
+  // FocusScopeNode? _focusScopeNode;
 
   @override
   void initState() {
@@ -42,6 +47,8 @@ class _LoginPageState extends State<LoginPage> {
   void _doLogin() {
     var userName = _userNameController.text.trim();
     var password = _passwordController.text.trim();
+
+    LoadingDialog.show(context, canPop: true);
   }
 
   @override
@@ -95,6 +102,7 @@ class _LoginPageState extends State<LoginPage> {
     return SizedBox(
       height: 50.0,
       child: TextField(
+        focusNode: _userNameFocusNode,
         controller: _userNameController,
         obscureText: false,
         decoration: InputDecoration(
@@ -145,6 +153,7 @@ class _LoginPageState extends State<LoginPage> {
     return SizedBox(
       height: 50.0,
       child: TextField(
+        focusNode: _passwordFocusNode,
         controller: _passwordController,
         obscureText: _obscureText,
         keyboardType: TextInputType.text,
@@ -222,7 +231,11 @@ class _LoginPageState extends State<LoginPage> {
       child: IgnorePointer(
         ignoring: !_allTextFilled,
         child: ElevatedButton(
-          onPressed: _doLogin,
+          onPressed: () {
+            _userNameFocusNode.unfocus();
+            _passwordFocusNode.unfocus();
+            _doLogin();
+          },
           style: ElevatedButton.styleFrom(
             foregroundColor: Colors.white,
             backgroundColor: _allTextFilled ? Colors.black87 : Colors.black12,

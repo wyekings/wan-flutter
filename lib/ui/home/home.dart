@@ -41,7 +41,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _incrementCounter() {
-    ToastUtil.show('msg');
     context.read<AuthProvider>().login();
     setState(() {
       getBanners();
