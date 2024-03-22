@@ -21,7 +21,16 @@ class _SlideDrawerState extends State<SlideDrawer> {
 
   @override
   void initState() {
-    _getUserInfo();
+    var provider = context.read<AuthProvider>();
+    provider.addListener(() {
+      if(provider.authed) {
+        _getUserInfo();
+      }
+    });
+
+    if(provider.authed) {
+      _getUserInfo();
+    }
     super.initState();
   }
 
