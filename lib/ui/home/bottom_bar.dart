@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class BottomBar extends StatefulWidget {
   final int currentIndex;
 
-  final Function(int) onItemSelected;
+  final ValueChanged<int> onItemSelected;
 
   const BottomBar({
     super.key,

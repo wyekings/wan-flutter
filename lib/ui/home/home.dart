@@ -21,11 +21,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
-  int _counter = 0;
+  late PageController _controller;
 
   @override
   void initState() {
+    _controller = PageController(initialPage: _currentIndex);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   void getBanners() async {
@@ -42,14 +49,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _incrementCounter() {
-    getBanners();
-    // _doLogin();
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,13 +58,16 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          HomeContent(),
+          HomeContent(controller: _controller,onPageChanged: (index){
+            setState(() {
+              _currentIndex = index;
+            });
+          },),
           BottomBar(
             currentIndex: _currentIndex,
             onItemSelected: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
+              _currentIndex = index;
+              _controller.jumpToPage(index);
             },
           ),
         ],
