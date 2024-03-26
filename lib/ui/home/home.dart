@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttery_timber/fluttery_timber.dart';
 import 'package:wan/net/request.dart';
 import 'package:wan/ui/auth/data/entity/login_entity.dart';
+import 'package:wan/ui/home/bottom_bar.dart';
+import 'package:wan/ui/home/content.dart';
 import 'package:wan/ui/home/data/entity/banner_entity.dart';
 import 'package:wan/ui/home/drawer.dart';
 
@@ -17,11 +19,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+
   int _counter = 0;
 
   @override
   void initState() {
-    getBanners();
     super.initState();
   }
 
@@ -39,21 +42,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _doLogin() async {
-    final params = {'username': 'wptdxii', 'password': '72762922'};
-    final result =
-    await post<LoginEntity>('/user/login', queryParameters: params);
-    result.when(
-      onSuccess: (value) {
-        Timber.d('onSuccess=$value');
-      },
-      onFailure: (e) {
-        Timber.e(e.message);
-      },
-    );
-  }
-
-
   void _incrementCounter() {
     getBanners();
     // _doLogin();
@@ -68,25 +56,20 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          HomeContent(),
+          BottomBar(
+            currentIndex: _currentIndex,
+            onItemSelected: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+          ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
       drawer: const SlideDrawer(),
     );
   }
